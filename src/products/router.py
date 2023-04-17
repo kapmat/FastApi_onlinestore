@@ -1,16 +1,37 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi_cache.decorator import cache
 from sqlalchemy import select, insert, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from auth.models import User
+
 from database import get_async_session
 from products.models import Product, Category
 from products.schemas import AddProduct
+
 
 router = APIRouter(
     prefix="/products",
     tags=["Products"]
 )
+
+
+@router.get("/")
+@cache(expire=60)
+async def get_all_products(session: AsyncSession = Depends(get_async_session)):
+    try:
+        query = select(Product)
+        result = await session.execute(query)
+        return {
+            200: "success",
+            "data": result.scalars().all(),
+            "details": None
+        }
+    except Exception as ex:
+        raise HTTPException(status_code=500, detail={
+            "status": "error",
+            "data": None,
+            "details": ex
+        })
 
 
 @router.post("/")
@@ -23,24 +44,6 @@ async def add_product(new_product: AddProduct, session: AsyncSession = Depends(g
             201: "success",
             "data": None,
             "details": "New product successfully added!"
-        }
-    except Exception as ex:
-        raise HTTPException(status_code=500, detail={
-            "status": "error",
-            "data": None,
-            "details": ex
-        })
-
-
-@router.get("/")
-async def get_all_products(session: AsyncSession = Depends(get_async_session)):
-    try:
-        query = select(Product)
-        result = await session.execute(query)
-        return {
-            200: "success",
-            "data": result.scalars().all(),
-            "details": None
         }
     except Exception as ex:
         raise HTTPException(status_code=500, detail={
