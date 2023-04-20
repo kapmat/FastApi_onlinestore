@@ -1,12 +1,9 @@
-from sqlalchemy import MetaData, Table, Column, Integer, String, Boolean, Float, ForeignKey, BINARY
-from sqlalchemy.orm import mapper, registry
+from sqlalchemy import Column, Integer, String, Boolean, Float, ForeignKey
 
-from database import Base
-
-# metadata = MetaData()
+from database import BaseMeta
 
 
-class Category(Base):
+class Category(BaseMeta):
     __tablename__ = "categories"
 
     category_id = Column(Integer, primary_key=True)
@@ -15,7 +12,7 @@ class Category(Base):
     picture = Column(String)
 
 
-class Product(Base):
+class Product(BaseMeta):
     __tablename__ = "products"
 
     product_id = Column(Integer, primary_key=True)
@@ -27,10 +24,3 @@ class Product(Base):
     discontinued = Column(Boolean)
     picture = Column(String)
     description = Column(String)
-
-
-
-
-#
-# mapper_registry = registry()
-# mapper_registry.map_imperatively(Product, products)

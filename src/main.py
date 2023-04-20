@@ -4,8 +4,9 @@ from fastapi_cache.backends.redis import RedisBackend
 
 from redis import asyncio as aioredis
 
-from products.router import router as router_products
 from auth.router import router as router_auth
+from products.router import router as router_products
+from orders.router import router as router_orders
 
 app = FastAPI(
     title="Social_network"
@@ -13,6 +14,7 @@ app = FastAPI(
 
 app.include_router(router_auth)
 app.include_router(router_products)
+app.include_router(router_orders)
 
 
 @app.on_event("startup")

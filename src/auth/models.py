@@ -1,15 +1,13 @@
 from datetime import datetime
 
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
-from sqlalchemy import MetaData, Table, Column, Integer, String, TIMESTAMP, Boolean
+from sqlalchemy import Integer, String, TIMESTAMP, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
 
-from database import Base
-
-# metadata = MetaData()
+from database import BaseMeta
 
 
-class User(SQLAlchemyBaseUserTable[int], Base):
+class User(SQLAlchemyBaseUserTable[int], BaseMeta):
     __tablename__ = "user"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)

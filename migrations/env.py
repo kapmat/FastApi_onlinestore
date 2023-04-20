@@ -9,8 +9,10 @@ import os
 import sys
 
 from src.config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS
-from src.auth.models import metadata as metadata_auth
-from src.products.models import metadata as metadata_products
+from src.auth.models import *
+from src.products.models import *
+from src.orders.models import *
+from src.database import BaseMeta
 
 
 sys.path.append(os.path.join(sys.path[0], 'src'))
@@ -35,7 +37,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = [metadata_auth, metadata_products]
+target_metadata = BaseMeta.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

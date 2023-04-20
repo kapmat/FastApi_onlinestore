@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 
 
 class AddProduct(BaseModel):
@@ -11,4 +11,10 @@ class AddProduct(BaseModel):
     discontinued: bool
     picture: str
     description: str
+
+    @validator('unit_price', 'units_in_stock', 'units_on_order')
+    def check_price(cls, value):
+        if value < 0:
+            raise ValueError("The value cannot be less than 0")
+        return value
 

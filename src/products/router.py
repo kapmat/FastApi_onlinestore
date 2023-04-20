@@ -90,19 +90,19 @@ async def add_product(put_product_id: int, put_product: AddProduct, session: Asy
             "details": ex
         })
 
-#
-# @router.get("/categories")
-# async def get_all_categories(session: AsyncSession = Depends(get_async_session)):
-#     query = select(Category)
-#     result = await session.execute(query)
-#     return result.scalars().all()
-#
-#
-# @router.get("/{product_id}")
-# async def get_product(product_id: int, session: AsyncSession = Depends(get_async_session)):
-#     query = select(Product).where(Product.product_id == product_id)
-#     result = await session.execute(query)
-#     return result.scalars().all()
+
+@router.get("/categories")
+async def get_all_categories(session: AsyncSession = Depends(get_async_session)):
+    query = select(Category)
+    result = await session.execute(query)
+    return result.scalars().all()
+
+
+@router.get("/{product_id}")
+async def get_product(product_id: int, session: AsyncSession = Depends(get_async_session)):
+    query = select(Product).where(Product.product_id == product_id)
+    result = await session.execute(query)
+    return result.scalars().one()
 
 
 
