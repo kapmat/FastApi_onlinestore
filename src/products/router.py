@@ -43,7 +43,7 @@ async def add_product(new_product: AddProduct, session: AsyncSession = Depends(g
         return {
             201: "success",
             "data": None,
-            "details": "New product successfully added!"
+            "details": "Новый товар успешно добавлен!"
         }
     except Exception as ex:
         raise HTTPException(status_code=500, detail={
@@ -62,7 +62,7 @@ async def drop_product(drop_product_id: int, session: AsyncSession = Depends(get
         return {
             200: "success",
             "data": None,
-            "details": "The product has been successfully removed!"
+            "details": "Товар успешно удален!"
         }
     except Exception as ex:
         raise HTTPException(status_code=500, detail={
@@ -81,7 +81,7 @@ async def add_product(put_product_id: int, put_product: AddProduct, session: Asy
         return {
             200: "success",
             "data": None,
-            "details": "The product has been successfully modified!"
+            "details": "Товар успешно изменен!"
         }
     except Exception as ex:
         raise HTTPException(status_code=500, detail={

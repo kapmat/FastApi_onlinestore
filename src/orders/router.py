@@ -22,7 +22,7 @@ async def get_all_orders(session: AsyncSession = Depends(get_async_session)):
         return {
             200: "success",
             "data": result.scalars().all(),
-            "details": f"Количество заказов: {len(result.scalars().all())}"
+            "details": None
         }
     except HTTPException as ex:
         return {
@@ -34,7 +34,18 @@ async def get_all_orders(session: AsyncSession = Depends(get_async_session)):
 
 @router.post("/")
 async def add_order(new_order: AddOrder, session: AsyncSession = Depends(get_async_session)):
-    stmt = insert(Order).values(**new_order.dict())
-    await session.execute(stmt)
-    await session.commit()
-    return {200: "success"}
+    try:
+        stmt = insert(Order).values(**new_order.dict())
+        await session.execute(stmt)
+        await session.commit()
+        return {
+            201: "success",
+            "data": None,
+            "details": f"Заказ создан!"
+        }
+    except HTTPException as ex:
+        return {
+            500: "error",
+            "data": None,
+            "details": ex
+        }
