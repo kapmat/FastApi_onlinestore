@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script>
+    const searchForProduct = () => {
+        const searchInputValue = document.getElementById("product_search").value;
+        window.location.href = `/pages/search/${searchInputValue}`;
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="flex justify-center flex-col items-center">
+    <div class="flex my-3 gap-5">
+        <input id="product_search" type="text" placeholder="Название товара" class="text-xl">
+        <button onclick="searchForProduct()" class="border-2 rounded-3xl bg-gray-300 p-3">Поиск по товарам</button>
+    </div>
+    <span>Например, iPhone, AirPods, Apple Watch и т.д.</span>
+    {% for product in products %}
+        <div class="flex rounded-3 border-2 p-3 mt-5">
+            <img width="150" src="{{ url_for('static', path=product.picture) }}" alt="Стонкс" class="mr-5">
+            <div class="flex flex-col">
+                <span class="text-2xl">{{ product.product_name }}</span>
+                <span class="text-2xl font-bold">{{ product.unit_price }} ₽</span>
+                <span class="text-lg">{{ product.description }}</span>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
