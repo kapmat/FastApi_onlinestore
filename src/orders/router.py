@@ -14,7 +14,7 @@ router = APIRouter(
 )
 
 
-@router.get("/")
+@router.get("")
 async def get_all_orders(session: AsyncSession = Depends(get_async_session)):
     try:
         query = select(Order)
@@ -32,7 +32,7 @@ async def get_all_orders(session: AsyncSession = Depends(get_async_session)):
         }
 
 
-@router.post("/")
+@router.post("")
 async def add_order(new_order: AddOrder, session: AsyncSession = Depends(get_async_session)):
     try:
         stmt = insert(Order).values(**new_order.dict())
@@ -42,6 +42,25 @@ async def add_order(new_order: AddOrder, session: AsyncSession = Depends(get_asy
             201: "success",
             "data": None,
             "details": f"Заказ создан!"
+        }
+    except HTTPException as ex:
+        return {
+            500: "error",
+            "data": None,
+            "details": ex
+        }
+
+
+@router.delete("")
+async def drop_order(drop_order_id: int, session: AsyncSession = Depends(get_async_session)):
+    try:
+        stmt = delete(Order).where(Order.order_id == drop_order_id)
+        await session.execute(stmt)
+        await session.commit()
+        return {
+            200: "success",
+            "data": None,
+            "details": f"Заказ удален!"
         }
     except HTTPException as ex:
         return {

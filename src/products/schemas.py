@@ -11,6 +11,7 @@ class AddProduct(BaseModel):
     discontinued: bool
     picture: str
     description: str
+    tags: str
 
     @validator('unit_price', 'units_in_stock', 'units_on_order')
     def check_price(cls, value):
