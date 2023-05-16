@@ -46,10 +46,10 @@ async def add_product(new_product: AddProduct, session: AsyncSession = Depends(g
             "details": "Новый товар успешно добавлен!"
         }
     except Exception as ex:
-        raise HTTPException(status_code=500, detail={
-            500: "error",
-            "data": None,
-            "details": ex
+        raise HTTPException(status_code=200, detail={
+            "status": "error",
+            "data": "Не верно указаны значения!",
+            "details": str(ex)
         })
 
 
@@ -73,7 +73,7 @@ async def drop_product(drop_product_id: int, session: AsyncSession = Depends(get
 
 
 @router.put("")
-async def add_product(put_product_id: int, put_product: AddProduct, session: AsyncSession = Depends(get_async_session)):
+async def change_product(put_product_id: int, put_product: AddProduct, session: AsyncSession = Depends(get_async_session)):
     try:
         stmt = update(Product).where(Product.product_id == put_product_id).values(**put_product.dict())
         await session.execute(stmt)

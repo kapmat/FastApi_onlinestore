@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
-from sqlalchemy import Integer, String, TIMESTAMP, Boolean
+from sqlalchemy import Integer, String, TIMESTAMP, Boolean, JSON
 from sqlalchemy.orm import Mapped, mapped_column
 
 from database import BaseMeta
@@ -25,3 +25,4 @@ class User(SQLAlchemyBaseUserTable[int], BaseMeta):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     is_superuser: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     is_verified: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    bag: Mapped[dict] = mapped_column(JSON)

@@ -68,3 +68,21 @@ async def drop_order(drop_order_id: int, session: AsyncSession = Depends(get_asy
             "data": None,
             "details": ex
         }
+
+
+@router.get("/{order_id}")
+async def get_order(order_id: int, session: AsyncSession = Depends(get_async_session)):
+    try:
+        query = select(Order).where(Order.order_id == order_id)
+        result = await session.execute(query)
+        return {
+            200: "success",
+            "data": result.scalars().all(),
+            "details": None
+        }
+    except HTTPException as ex:
+        return {
+            500: "error",
+            "data": None,
+            "details": ex
+        }
