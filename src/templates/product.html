@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex justify-center flex-col items-center">
+    <div class="flex rounded-3 border-2 p-3 mt-5">
+        <img width="300" src="{{ url_for('static', path=product.picture) }}" alt="Стонкс" class="mr-5">
+        <div class="flex flex-col">
+            <span class="text-3xl">{{ product.product_name }}</span>
+            <span class="text-lg">{{ product.description }}</span>
+            <br>
+            <span class="text-5xl">{{ product.unit_price }} ₽</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

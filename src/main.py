@@ -14,7 +14,7 @@ app = FastAPI(
     title="Online_Store"
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.include_router(router_auth)
 app.include_router(router_products)

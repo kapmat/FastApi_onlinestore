@@ -46,7 +46,7 @@ async def add_product(new_product: AddProduct, session: AsyncSession = Depends(g
             "details": "Новый товар успешно добавлен!"
         }
     except Exception as ex:
-        raise HTTPException(status_code=200, detail={
+        raise HTTPException(status_code=500, detail={
             "status": "error",
             "data": "Не верно указаны значения!",
             "details": str(ex)
